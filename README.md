@@ -105,7 +105,7 @@ Dikarenakan:
 
 ## 📌 Evaluation
 **Metrik evaluasi yang digunakan yaitu MSE** <br>
-Mean Squared Error (MSE) 
+Mean Squared Error (MSE) <br>
 MSE mengukur rata-rata kuadrat dari selisih antara nilai prediksi dan nilai aktual. Semakin kecil nilai MSE, maka semakin baik model dalam melakukan prediksi. <br>
 Rumus: <br>
 MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
