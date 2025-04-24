@@ -23,17 +23,6 @@ Dengan kemajuan teknologi dan ketersediaan data pertanian yang semakin melimpah,
    - Random Forest Regressor
    - Linear Regression
 2. Melakukan evaluasi performa model menggunakan metrik **Mean Squared Error (MSE)** pada data training dan testing untuk memastikan generalisasi yang baik
-##### 📐 Pengukuran solusi
-Evaluasi model
-|     | train | test   |
-|:--- |:-----:|-------:|
-|RF   |0.21903|0.252526|
-|LN   |0.25041|0.249836|
-
-Uji
-|     |y_true|prediksi_RF| prediksi_LN|
-|:--- |:----:|:---------:|-----------:|
-|382393|1.676764|2.0001|1.9957|
 
 ## 📂 Data Understanding
 Dataset berisi data pertanian untuk 1.000.000 sampel yang bertujuan untuk memprediksi hasil panen (dalam ton per hektar) berdasarkan berbagai faktor. Dataset ini dapat digunakan untuk tugas regresi dalam pembelajaran mesin, terutama untuk memprediksi produktivitas tanaman. 
@@ -67,7 +56,18 @@ Variabel pada dataset yang digunakan
 
 ##  🤖 Modelling
 Algoritma yang digunakan
-1. Linear Regression
+1. **Linear Regression**
+   - Cara Kerja <br>
+     Linear Regression bekerja dengan mencari hubungan linear antara fitur-fitur input (misalnya rainfall, temperature, dll) dan target output (Yield_tons_per_hectare). Model ini menghitung koefisien untuk setiap fitur yang menunjukkan seberapa besar pengaruh fitur tersebut terhadap target. <br><br>
+     Rumus Dasar Linear Regression <br><br>
+        ŷ = β0 + β1*x1 + β2*x2 + ... + βn*xn <br> <br>
+     dimana:
+     * ŷ : hasil panen yang diprediksi
+     * β0 : intercept (konstanta)
+     * x1...xn : hasil fitur (contoh rainfall, temperature)
+     * β1...βn : koefisien regresi untuk masing-masing fitur
+     <br>
+   Linear Regression digunakan sebagai baseline model karena model ini mudah diinterpretasikan dan cepat untuk dilatih. Ia membantu melihat apakah ada hubungan linear antara fitur-fitur seperti rainfall_mm, temperature_celcius, region, dll terhadap hasil panen(Yield_tons_per_hectare)<br><br>
    - Parameter:
      - Menggunakan parameter default dari ```LinearRegression()``` dari ```sklearn.linear_model```.
     - Kelebihan
@@ -78,13 +78,22 @@ Algoritma yang digunakan
       - Kurang efektif untuk data non-linear
       - Sangat sensitif terhadap outlier
       - Tidak mampu menangkap interaksi kompleks antar fitur.
-2. Random Forest Regressor
+3. Random Forest Regressor
+   - Cara Kerja
+     Random Forest adalah algoritma ensemble yang terdiri dari banyak decision tree. Setiap pohon dibangun dari subset data dan subset fitur yang dipilih secara acak. Setiap pohon membuat prediksi sendiri, dan hasil akhir adalah rata-rata dari semua prediksi pohon tersebut.<br>
+     Proses training model mencakup:
+     * Pemisahan data berdasarkan kondisi fitur
+     * Pengulangan proses ini sampai mencapai kedalaman maksimum atau data tidak bisa dibagi lagi
+     * Membuat banyak pohon seperti ini, lalu menggabungkan hasilnya (averaging)<br>
+       <br>
+Kaitannya dengan projek saya, Random Forest digunakan dalam proyek prediksi hasil panen karena kemampuannya dalam menangani hubungan non-linear antara variabel, bekerja baik dengan data numerik maupun kategorikal (yang telah diubah melalui proses encoding), serta ketahanannya terhadap outlier dan noise meskipun data telah melalui proses pembersihan. Selain itu, Random Forest tidak memerlukan banyak pra-pemrosesan seperti normalisasi, sehingga cocok untuk data pertanian yang kompleks dan bervariasi.
+     
    - Parameter yang digunakan:
      ```
      RandomForestRegressor(
       n_estimators=50,
-      max_depth=16,
-      random_state=55,
+      max_depth=14,
+      random_state=123,
       n_jobs=-1
      )
      ```
