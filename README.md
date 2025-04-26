@@ -27,8 +27,8 @@ Dengan kemajuan teknologi dan ketersediaan data pertanian yang semakin melimpah,
 ## 📂 Data Understanding
 Dataset berisi data pertanian untuk 1.000.000 sampel yang bertujuan untuk memprediksi hasil panen (dalam ton per hektar) berdasarkan berbagai faktor. Dataset ini dapat digunakan untuk tugas regresi dalam pembelajaran mesin, terutama untuk memprediksi produktivitas tanaman. 
 Dataset bisa diakses pada link berikut ini: https://www.kaggle.com/datasets/samuelotiattakorah/agriculture-crop-yield
-
-Variabel pada dataset yang digunakan
+<br><br>
+**Variabel pada dataset yang digunakan**
 * Region: Wilayah geografis tempat tanaman tumbuh (North, East, South, West)
 * Soil_Type: Jenis tanah tempat tanaman ditanam (Clay, Sandy, Loam, Silt, Peaty, Chalky)
 * Crop: Jenis tanaman yang ditanam (Wheat, Rice, Maize, Barley, Soybean, Cotton)
@@ -38,19 +38,66 @@ Variabel pada dataset yang digunakan
 * Irrigation_Used:  Menunjukkan apakah irigasi digunakan selama periode pertumbuhan tanaman (True, False)
 * Weather_Condition:  Kondisi cuaca yang dominan selama musim tanam (Sunny, Rainy, Cloudy)
 * Days_to_Harvest: Jumlah hari yang dibutuhkan tanaman untuk dipanen setelah penanaman.
-* Yield_tons_per_hectare: Total hasil panen yang dihasilkan, diukur dalam ton per hektar.
+* Yield_tons_per_hectare: Total hasil panen yang dihasilkan, diukur dalam ton per hektar. <br>
+
+**Informasi mengenai dataset <br>**
+```
+   <class 'pandas.core.frame.DataFrame'>
+   RangeIndex: 1000000 entries, 0 to 999999
+   Data columns (total columns):
+    #   Column                  Non-Null Count    Dtype  
+   ---  ------                  --------------    -----  
+    0   Region                  1000000 non-null  object 
+    1   Soil_Type               1000000 non-null  object 
+    2   Crop                    1000000 non-null  object 
+    3   Rainfall_mm             1000000 non-null  float64
+    4   Temperature_Celsius     1000000 non-null  float64
+    5   Fertilizer_Used         1000000 non-null  bool   
+    6   Irrigation_Used         1000000 non-null  bool   
+    7   Weather_Condition       1000000 non-null  object 
+    8   Days_to_Harvest         1000000 non-null  int64  
+    9   Yield_tons_per_hectare  1000000 non-null  float64
+   dtypes: bool(2), float64(3), int64(1), object(4)
+   memory usage: 62.9+ MB
+```
+**Jumlah missing value**
+|                         | 0 |
+|:------------------------|--:|
+|Region                   |0.0|
+|Soil_Type                |0.0|
+|Crop                     |0.0|
+|Rainfall_mm              |0.0|
+|Temperature_Celcius      |0.0|
+|Fertilizer_Used          |0.0|
+|Irrigation_Used          |0.0|
+|Weather_Condition        |0.0|
+|Days_to_Harvest          |0.0|
+|Yield_tons_per_hectare   |0.0| 
+
+dtype:float64
+<br>
+
+**Jumlah duplicate<br>**
+```np.int64(0)``` <br>
+Artinya tidak ada data duplikat dari file
 
 ## 📋 Data Preparation
-1. Encoding Fitur Kategori <br>
+1. Handling Missing Values <br>
+   Alasan: Karena tidak ditemukan missing values pada tahap Data Understanding, maka tidak diperlukan tindakan seperti penghapusan atau imputasi data. <br>
+2. Handling Duplicate Data <br>
+   Alasan: Karena tidak ditemukan data yang duplikat, maka tidak dilakukan penghapusan data duplicate.
+3. Handing Outlier <br>
+   Alasan: Outlier pada kolom ```Yield_tons_per_hectare``` dihapus menggunakan metode Interquartile Range (IQR).Hal ini bertujuan untuk mengurangi noise dan meningkatkan kualitas data sebelum modeling. <br>
+4. Encoding Fitur Kategori <br>
    Alasan: <br>
    Dikarenakan sebagian besar variabel atau fitur tidak bisa bekerja langsung dengan data kategorikal. Maka dari itu, fitur kategori diubah menjadi representasi numerik menggunakan One-Hot Encoding ```pd.get_dummies``` agar bisa digunakan oleh model
-2. Train-Test Split <br>
+5. Train-Test Split <br>
    Alasan: <br>
    Data dibagi menjadi data latih(80%) dan data uji (20%) agar performa model dapat dievaluasi pada data yang belum pernah dilihat sebelumnya, sehingga mengurangi risiko overfitting
-3. Validasi Jumlah Sampel
+6. Validasi Jumlah Sampel
    Alasan: <br>
    Untuk memastikan bahwa jumlah sampel pada masing - masing subset (train dan test) telag sesuai dan tidak terjadi kehilangan data secara tidak sengaja.
-4. Standarisasi fitur numerik
+7. Standarisasi fitur numerik
    Alasan: <br>
    Agar memiliki distribusi seragam(mean = 0 dan standar deviasi = 1). Ini sangat penting terutama ketika menggunakan algoritma sensitif terhadap skala data seperti regresi linear.
 
@@ -125,7 +172,13 @@ MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
 |RF   |0.21903|0.252526|
 |LN   |0.25041|0.249836|
 
-**Interpretasi Hasil**
-* Linear Regression memberikan performa yang cukup stabil antara data training dan testing, namun memiliki MSE yang sedikit lebih tinggi pada data training dibanding Random Forest.
-* Random Forest Regressor menunjukkan MSE yang lebih rendah di data training, menandakan model ini lebih baik dalam menangkap pola kompleks pada data.
-* Meskipun selisih di MSE testing relatif kecil, Random Forest tetap dipilih sebagai model terbaik karena performanya yang lebih konsisten dan kemampuannya menangani data non-linear dan fitur interaksi.
+**Interpretasi Hasil berdasarkan problem statement**
+1. Masalah 1: Bagaimana cara memprediksi hasil panen secara akurat berdasarkan kondisi cuaca dan faktor pertanian lainnya? <br>
+Random Forest dipilih sebagai model karena menghasilkan nilai MSE yang lebih rendah pada data training, menunjukkan kemampuannya dalam menangkap pola kompleks dari data cuaca dan faktor pertanian lainnya.<br>
+Dampak : Prediksi hasil panen menjadi lebih akurat, membantu perencanaan tanam dan panen secara lebih efisien, sehingga mendukung keputusan bisnis yang berbasis data. <br>
+2. Masalah 2: Apa model terbaik yang dapat digunakan untuk memprediksi hasil panen dengan performa tinggi dan error minimal? <br>
+Berdasarkan hasil evaluasi, Random Forest memiliki performa lebih tinggi dengan error yang lebih kecil dibanding Linear Regression, khususnya dalam mengelola data non-linear.<br>
+Dampak : Pemilihan Random Forest sebagai model terbaik mendukung pencapaian target bisnis untuk meningkatkan akurasi prediksi, meminimalisir kerugian akibat prediksi yang tidak tepat.
+3. Bagaimana membandingkan efektivitas model machine learning seperti Random Forest dan Linear Regression dalam konteks prediksi hasil panen? <br>
+Perbandingan performa antara Random Forest dan Linear Regression menunjukkan bahwa Random Forest lebih unggul dalam menangani kompleksitas data dan interaksi antar fitur.<br>
+Dampak: Hasil perbandingan ini memberikan dasar yang kuat untuk memilih model yang lebih efektif, meningkatkan akurasi bisnis dalam estimasi produksi, dan memperbaiki strategi manajemen pertanian secara keseluruhan.
