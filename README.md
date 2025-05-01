@@ -1,4 +1,3 @@
-
 # Laporan Proyek Machine Learning - Natalio Michael Tumuahi
 
 ## :dart: Domain Proyek
@@ -180,7 +179,13 @@ MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
 |RF   |0.22603|0.252537|
 |LN   |0.25041|0.249838|
 
-**Interpretasi Hasil**
-* Linear Regression memberikan performa yang cukup stabil antara data training dan testing, namun memiliki MSE yang sedikit lebih tinggi pada data training dibanding Random Forest.
-* Random Forest Regressor menunjukkan MSE yang lebih rendah di data training, menandakan model ini lebih baik dalam menangkap pola kompleks pada data.
-* Meskipun selisih di MSE testing relatif kecil, Random Forest tetap dipilih sebagai model terbaik karena performanya yang lebih konsisten dan kemampuannya menangani data non-linear dan fitur interaksi.
+**Interpretasi Hasil berdasarkan problem statement**
+1. Masalah 1: Bagaimana cara memprediksi hasil panen secara akurat berdasarkan kondisi cuaca dan faktor pertanian lainnya? <br>
+Random Forest dipilih sebagai model karena menghasilkan nilai MSE yang lebih rendah pada data training, menunjukkan kemampuannya dalam menangkap pola kompleks dari data cuaca dan faktor pertanian lainnya.<br>
+Dampak : Prediksi hasil panen menjadi lebih akurat, membantu perencanaan tanam dan panen secara lebih efisien, sehingga mendukung keputusan bisnis yang berbasis data. <br>
+2. Masalah 2: Apa model terbaik yang dapat digunakan untuk memprediksi hasil panen dengan performa tinggi dan error minimal? <br>
+Berdasarkan hasil evaluasi, Random Forest memiliki performa lebih tinggi dengan error yang lebih kecil dibanding Linear Regression, khususnya dalam mengelola data non-linear.<br>
+Dampak : Pemilihan Random Forest sebagai model terbaik mendukung pencapaian target bisnis untuk meningkatkan akurasi prediksi, meminimalisir kerugian akibat prediksi yang tidak tepat.
+3. Bagaimana membandingkan efektivitas model machine learning seperti Random Forest dan Linear Regression dalam konteks prediksi hasil panen? <br>
+Perbandingan performa antara Random Forest dan Linear Regression menunjukkan bahwa Random Forest lebih unggul dalam menangani kompleksitas data dan interaksi antar fitur.<br>
+Dampak: Hasil perbandingan ini memberikan dasar yang kuat untuk memilih model yang lebih efektif, meningkatkan akurasi bisnis dalam estimasi produksi, dan memperbaiki strategi manajemen pertanian secara keseluruhan.
