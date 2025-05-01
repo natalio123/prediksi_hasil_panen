@@ -28,7 +28,7 @@ Dengan kemajuan teknologi dan ketersediaan data pertanian yang semakin melimpah,
 Dataset berisi data pertanian untuk 1.000.000 sampel yang bertujuan untuk memprediksi hasil panen (dalam ton per hektar) berdasarkan berbagai faktor. Dataset ini dapat digunakan untuk tugas regresi dalam pembelajaran mesin, terutama untuk memprediksi produktivitas tanaman. 
 Dataset bisa diakses pada link berikut ini: https://www.kaggle.com/datasets/samuelotiattakorah/agriculture-crop-yield
 <br><br>
-**Variabel pada dataset yang digunakan**
+**Variabel pada dataset**
 * Region: Wilayah geografis tempat tanaman tumbuh (North, East, South, West)
 * Soil_Type: Jenis tanah tempat tanaman ditanam (Clay, Sandy, Loam, Silt, Peaty, Chalky)
 * Crop: Jenis tanaman yang ditanam (Wheat, Rice, Maize, Barley, Soybean, Cotton)
@@ -38,6 +38,13 @@ Dataset bisa diakses pada link berikut ini: https://www.kaggle.com/datasets/samu
 * Irrigation_Used:  Menunjukkan apakah irigasi digunakan selama periode pertumbuhan tanaman (True, False)
 * Weather_Condition:  Kondisi cuaca yang dominan selama musim tanam (Sunny, Rainy, Cloudy)
 * Days_to_Harvest: Jumlah hari yang dibutuhkan tanaman untuk dipanen setelah penanaman.
+* Yield_tons_per_hectare: Total hasil panen yang dihasilkan, diukur dalam ton per hektar. <br>
+
+**Variabel dataset yang digunakan setelah dilakukan proses EDA**
+* Rainfall_mm: Jumlah curah hujan yang diterima dalam milimeter selama periode pertumbuhan tanaman.
+* Temperature_Celcius: Suhu rata-rata selama periode pertumbuhan tanaman, diukur dalam derajat Celcius.
+* Fertilizer_Used: Menunjukkan apakah pupuk telah diberikan(True, False)
+* Irrigation_Used: Menunjukkan apakah irigasi digunakan selama periode pertumbuhan tanaman (True, False)
 * Yield_tons_per_hectare: Total hasil panen yang dihasilkan, diukur dalam ton per hektar. <br>
 
 **Informasi mengenai dataset <br>**
@@ -90,7 +97,7 @@ Artinya tidak ada data duplikat dari file
    Alasan: Outlier pada kolom ```Yield_tons_per_hectare``` dihapus menggunakan metode Interquartile Range (IQR).Hal ini bertujuan untuk mengurangi noise dan meningkatkan kualitas data sebelum modeling. <br>
 4. Encoding Fitur Kategori <br>
    Alasan: <br>
-   Dikarenakan sebagian besar variabel atau fitur tidak bisa bekerja langsung dengan data kategorikal. Maka dari itu, fitur kategori diubah menjadi representasi numerik menggunakan One-Hot Encoding ```pd.get_dummies``` agar bisa digunakan oleh model
+   Fitur kategorikal perlu diubah ke format numerik agar dapat digunakan dalam proses pelatihan model machine learning. Namun, setelah dilakukan analisis awal, diketahui bahwa fitur-fitur kategorikal tidak memiliki kontribusi yang signifikan terhadap variabel target (Yield_tons_per_hectare). Oleh karena itu, fitur-fitur ini tidak disertakan dalam proses pelatihan dan evaluasi model, dengan tujuan untuk menyederhanakan model dan menghindari dimensi yang tidak relevan yang dapat mempengaruhi akurasi prediksi. <br>
 5. Train-Test Split <br>
    Alasan: <br>
    Data dibagi menjadi data latih(80%) dan data uji (20%) agar performa model dapat dievaluasi pada data yang belum pernah dilihat sebelumnya, sehingga mengurangi risiko overfitting
@@ -169,8 +176,8 @@ MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
 **Hasil Evaluasi Model**
 |     | train | test   |
 |:--- |:-----:|-------:|
-|RF   |0.21903|0.252526|
-|LN   |0.25041|0.249836|
+|RF   |0.22603|0.252537|
+|LN   |0.25041|0.249838|
 
 **Interpretasi Hasil berdasarkan problem statement**
 1. Masalah 1: Bagaimana cara memprediksi hasil panen secara akurat berdasarkan kondisi cuaca dan faktor pertanian lainnya? <br>
